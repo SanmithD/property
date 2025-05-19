@@ -31,7 +31,7 @@ const addProperty = async(req, res) =>{
             success: false,
             message: "User id not found"
         });
-        }
+        } 
         const propertyDetails = new propertyModel({
             title,
             image, 
@@ -115,7 +115,6 @@ const getRoomById = async(req, res) =>{
         });
         }
         notification(name, roomId);
-        // getNotification()
         res.status(200).json({
             success: true,
             message: "Room",

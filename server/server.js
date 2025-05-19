@@ -3,6 +3,8 @@ import cors from 'cors';
 import 'dotenv/config';
 import express from 'express';
 import connectDB from './config/db.config.js';
+import buyRouter from './routes/buy.router.js';
+import contactRouter from './routes/contact.router.js';
 import notificationRouter from './routes/notification.router.js';
 import propertyRouter from './routes/property.router.js';
 import userRouter from './routes/user.router.js';
@@ -20,6 +22,8 @@ app.get('/', (req, res)=>{
 
 app.use('/api/auth', userRouter );
 app.use('/api/room', propertyRouter );
+app.use('/api/buy', buyRouter );
+app.use('/api/contact', contactRouter);
 app.use('/api/notification', notificationRouter );
 
 app.listen(PORT, ()=>{

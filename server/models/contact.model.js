@@ -1,23 +1,43 @@
 import mongoose from "mongoose";
 
 const contactSchema = new mongoose.Schema({
-    user:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'user'
-    },
-    room:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'property'
-    },
-    message:[{
-        question:{
-            type: String
-        },
-        answer: {
-            type: String
+    userMsg: [
+        {
+            userId: {
+                type: String,
+                required: true
+            },
+            name: {
+                type: String,
+                required: true
+            },
+            message: {
+                type: String,
+                required: true
+            },
+            replies: [
+                {
+                    userId: {
+                        type: String,
+                        required: true
+                    },
+                    name: {
+                        type: String,
+                        required: true
+                    },
+                    message: {
+                        type: String,
+                        required: true
+                    },
+                    createdAt: {
+                        type: Date,
+                        default: Date.now
+                    }
+                }
+            ]
         }
-    }]
-},{ timestamps: true });
+    ]
+}, { timestamps: true });
 
 const contactModel = mongoose.model('contact', contactSchema);
 
