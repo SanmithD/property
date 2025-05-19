@@ -30,6 +30,7 @@ const signupSchema = (req, res, next) => {
       "string.max": "password must be minimum  {#limit} character ",
       "any.required": "password is a required field.",
     }),
+    role: Joi.string().optional()
   });
 
   const { error } = signup.validate(req.body, { abortEarly: false });

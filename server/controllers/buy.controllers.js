@@ -110,3 +110,33 @@ export const ownerDecision = async (req, res) => {
     });
   }
 };
+
+export const cancelRoom = async(req, res) =>{
+    const { propertyId } = req.params;
+    if(!propertyId){
+        return res.status(400).json({
+            success: false,
+            message: "Invalid property"
+        });
+    }
+    try {
+        const response = await propertyModel.findByIdAndUpdate(propertyId,{ status: 'available' },{ new: true });
+        if(!response){
+            return res.status(400).json({
+            success: false,
+            message: "Unable to cancel property"
+        });
+        }
+        res.status(200).json({
+            success: true,
+            message: "Room Canceled",
+            response
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Server error"
+        });
+        console.log(error);
+    }
+}
