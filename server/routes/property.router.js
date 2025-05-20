@@ -4,7 +4,7 @@ import { addProperty, getAllRooms, getRoomById } from '../controllers/property.c
 
 const propertyRouter = express.Router();
 
-propertyRouter.post('/add', upload.array('image'), addProperty );
+propertyRouter.post('/add', upload.single('image'), addProperty );
 propertyRouter.get('/properties', getAllRooms );
 propertyRouter.get('/room/:roomId', getRoomById );
 

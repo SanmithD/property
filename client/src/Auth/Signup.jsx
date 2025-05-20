@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 function Signup() {
   const navigate = useNavigate();
+  const [isAlert, setIsAlert] = useState(false);
   const [alert, setAlert] = useState("");
   const [signupData, setSignupData] = useState({
     name: "",
@@ -33,8 +34,10 @@ function Signup() {
         signupData
       );
       if (!response) {
+        setIsAlert(true)
         setAlert(response.message);
       }
+      setIsAlert(true)
       setAlert(response.message);
       setTimeout(() => {
         setAlert("");
@@ -47,9 +50,13 @@ function Signup() {
 
   return (
     <div className="h-screen flex justify-center items-center">
-      <div className="absolute top-[5%] right-[15%] h-fit w-fit p-1 border-2 border-blue-500 bg-blue-100 rounded text-[16px] md:text-2xl lg:text-3xl ">
-        {alert}
-      </div>
+      {isAlert ? (
+        <div className="absolute top-[5%] right-[15%] h-fit w-fit p-1 border-2 border-blue-500 bg-blue-100 rounded text-[16px] md:text-2xl lg:text-3xl ">
+          {alert}
+        </div>
+      ) : (
+        ""
+      )}
       <div className="flex justify-center items-center h-[500px] sm:h-[500px] md:h-[500p] lg:h-[600px] border-2 border-gray-950 w-[80%] sm:w-[80%] md:w-[60%] lg:w-[70%] p-0 rounded-3xl ">
         <div className="w-full h-full p-0 m-0 bg-gray-900 rounded-3xl flex flex-col items-center justify-center gap-1 md:gap-5 lg:gap-7 ">
           <h1 className="text-[16px] md:text-3xl lg:text-4xl text-white font-bold ">

@@ -8,7 +8,7 @@ const JWT = process.env.JWT_SECRET;
 
 const addProperty = async(req, res) =>{
     const { title, description, owner, state, city, street, price, bedroom, sqFt, bathroom } = req.body;
-    const image = req.file ? req.file.pathname : null;
+    const image = req.file ? req.file.path : null;
     const token = req.headers.authorization.split(" ")[1];
 
     if(!token){
@@ -89,44 +89,99 @@ const getAllRooms = async(req, res) =>{
     }
 }
 
-const getRoomById = async(req, res) =>{
-    const { roomId } = req.params;
-    const token = req.headers.authorization.split(" ")[1];
-    if(!token){
-        return res.status(403).json({
-            success: false,
-            message: "Unauthorized"
-        });
+// const getRoomById = async(req, res) =>{
+//     const { roomId } = req.params;
+//     const token = req.headers.authorization.split(" ")[1];
+//     if(!token){
+//         return res.status(403).json({
+//             success: false,
+//             message: "Unauthorized"
+//         });
+//     }
+//     try {
+//         const { id } = jwt.verify(token, JWT);
+//         if(!id){
+//             return res.status(400).json({
+//             success: false,
+//             message: "id not found"
+//         });
+//         }
+//         const { name } = await userModel.findById(id);
+//         const response = await propertyModel.findById(roomId);
+//         if(!response){
+//             return res.status(404).json({
+//             success: false,
+//             message: "Room not found"
+//         });
+//         }
+//         notification(name, roomId);
+//         res.status(200).json({
+//             success: true,
+//             message: "Room",
+//             response
+//         });
+//     } catch (error) {
+//         res.status(500).json({
+//             success: false,
+//             message: "Server error"
+//         });
+//         console.log(error);
+//     }
+// }
+
+const getRoomById = async (req, res) => {
+  const { roomId } = req.params;
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return res.status(403).json({
+      success: false,
+      message: "Unauthorized",
+    });
+  }
+
+  const token = authHeader.split(" ")[1];
+
+  try {
+    const { id } = jwt.verify(token, JWT);
+    if (!id) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid token payload",
+      });
     }
-    try {
-        const { id } = jwt.verify(token, JWT);
-        if(!id){
-            return res.status(400).json({
-            success: false,
-            message: "id not found"
-        });
-        }
-        const { name } = await userModel.findById(id);
-        const response = await propertyModel.findById(roomId);
-        if(!response){
-            return res.status(404).json({
-            success: false,
-            message: "Room not found"
-        });
-        }
-        notification(name, roomId);
-        res.status(200).json({
-            success: true,
-            message: "Room",
-            response
-        });
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: "Server error"
-        });
-        console.log(error);
+
+    const user = await userModel.findById(id);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
     }
-}
+
+    const room = await propertyModel.findById(roomId);
+    if (!room) {
+      return res.status(404).json({
+        success: false,
+        message: "Room not found",
+      });
+    }
+
+    notification(user.name, roomId);
+
+    res.status(200).json({
+      success: true,
+      message: "Room",
+      response: room,
+    });
+  } catch (error) {
+    console.error("getRoomById error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+    });
+  }
+};
+
 
 export { addProperty, getAllRooms, getRoomById };

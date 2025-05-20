@@ -1,6 +1,8 @@
 import bcrypt from "bcrypt";
 import "dotenv/config";
 import jwt from 'jsonwebtoken';
+import buyModel from "../models/buy.model.js";
+import propertyModel from "../models/property.model.js";
 import userModel from "../models/user.model.js";
 
 const JWT = process.env.JWT_SECRET;
@@ -112,7 +114,6 @@ const profile = async(req, res) =>{
         });
     }
     try {
-        //fetching logged user
         const { id } = jwt.verify(token, JWT);
         if(!id){
             return res.status(400).json({
@@ -121,6 +122,7 @@ const profile = async(req, res) =>{
         });
         }
         const user = await userModel.findById(id);
+        const properties = await buyModel.find({ customer: id }).populate('property')
         if(!user){
             return res.status(400).json({
             success: false,
@@ -130,7 +132,8 @@ const profile = async(req, res) =>{
         res.status(200).json({
             success: true,
             message: "Profile",
-            user
+            user,
+            properties
         });
     } catch (error) {
         res.status(500).json({
@@ -141,5 +144,68 @@ const profile = async(req, res) =>{
     }
 }
 
-export { login, profile, signup };
+const user = async(req, res) =>{
+  const { userId } = req.params;
+  if(!userId){
+    return res.status(400).json({
+      success: false,
+      message: "Invalid user"
+    });
+  };
+  try {
+    const response = await userModel.findById(userId);
+    if(!response){
+      return res.status(400).json({
+      success: false,
+      message: "User not found"
+    });
+    }
+    res.status(200).json({
+      success: true,
+      message: "User",
+      response
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "server error"
+    });
+    console.log(error);
+  }
+}
+
+const ownerProperties = async(req, res) =>{
+  const token = req.headers.authorization.split(" ")[1];
+  if(!token){
+    return res.status(403).json({
+      success: false,
+      message: "Access denied"
+    });
+  };
+  try {
+    const { id } = jwt.verify(token, JWT);
+    const properties = await buyModel.find({ owner: id}).populate('customer').populate('property');
+    const availableProps = await propertyModel.find({ owner: id });
+    if(!properties){
+      return res.status(400).json({
+      success: false,
+      message: "Empty"
+    });
+    }
+    res.status(200).json({
+      success: true,
+      message: "Properties",
+      properties,
+      availableProps
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Server error"
+    });
+    console.log(error)
+  }
+}
+
+export { login, ownerProperties, profile, signup, user };
 

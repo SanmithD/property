@@ -46,7 +46,7 @@ const propertySchema = new mongoose.Schema({
         required: true
     },
     bathroom:{
-        type: String,
+        type: Number,
         required: true
     }
 },{ timestamps: true });

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import AdminRoute from "../Admin/Routes/AdminRoute";
 
 function Login() {
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ function Login() {
         `http://localhost:7000/api/auth/login`,
         loginData
       );
-      console.log(response.data)
+      console.log(response.data.role)
       if (!response) {
         setIsAlert(true);
         setAlert(response.data.message);
@@ -31,14 +32,15 @@ function Login() {
       setIsAlert(true);
       setAlert(response.data.message);
       localStorage.setItem('token', response.data.token)
+      localStorage.setItem('role', response.data.role);
       setTimeout(() => {
         setIsAlert(false);
         setAlert("");
-        if (response.data.role === "admin") {
-          navigate("/admin");
-        }
-        navigate("/");
-      }, 3000);
+      },1000);
+      if (response.data.role === "admin") {
+        navigate(<AdminRoute/>);
+      }
+      navigate("/");
     } catch (error) {
       console.log(error);
     }

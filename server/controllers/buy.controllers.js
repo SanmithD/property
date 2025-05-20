@@ -111,32 +111,72 @@ export const ownerDecision = async (req, res) => {
   }
 };
 
-export const cancelRoom = async(req, res) =>{
-    const { propertyId } = req.params;
-    if(!propertyId){
-        return res.status(400).json({
-            success: false,
-            message: "Invalid property"
-        });
+export const cancelRoom = async (req, res) => {
+  const { propertyId } = req.params;
+  if (!propertyId) {
+    return res.status(400).json({
+      success: false,
+      message: "Invalid property",
+    });
+  }
+  try {
+    const response = await propertyModel.findByIdAndUpdate(
+      propertyId,
+      { status: "available" },
+      { new: true }
+    );
+    if (!response) {
+      return res.status(400).json({
+        success: false,
+        message: "Unable to cancel property",
+      });
     }
-    try {
-        const response = await propertyModel.findByIdAndUpdate(propertyId,{ status: 'available' },{ new: true });
-        if(!response){
-            return res.status(400).json({
-            success: false,
-            message: "Unable to cancel property"
-        });
-        }
-        res.status(200).json({
-            success: true,
-            message: "Room Canceled",
-            response
-        })
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: "Server error"
-        });
-        console.log(error);
-    }
-}
+    res.status(200).json({
+      success: true,
+      message: "Room Canceled",
+      response,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+    });
+    console.log(error);
+  }
+};
+
+export const getOwnerRequests = async (req, res) => {
+  const token = req.headers.authorization?.split(" ")[1];
+  if (!token)
+    return res.status(401).json({ 
+  success: false, 
+  message: "Unauthorized" 
+});
+
+  try {
+    const { id: ownerId } = jwt.verify(token, JWT);
+
+    const requests = await buyModel
+      .find({ owner: ownerId, status: "pending" })
+      .populate("property", "title")
+      .populate("customer", "name");
+
+    const formatted = requests.map((req) => ({
+      _id: req._id,
+      customerName: req.customer.name,
+      propertyTitle: req.property.title,
+      createdAt: req.createdAt,
+    }));
+
+    res.status(200).json({ 
+      success: true, 
+      response: formatted 
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ 
+      success: false, 
+      message: "Server error" 
+    });
+  }
+};

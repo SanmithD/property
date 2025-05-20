@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function Navbar() {
   return (
-    <div className="bg-gray-900 w-screen h-[50px] sm:h-[50px] md:h-[70px] lg:h-[100px] flex items-center justify-between p-[10px] sm:p-[20px] md:p-[50px] lg:p-[60px] " >
+    <div className="bg-gray-900 h-[50px] sm:h-[50px] md:h-[70px] lg:h-[100px] flex items-center justify-between p-[10px] sm:p-[20px] md:p-[50px] lg:p-[60px] " >
         <div>
             <Link to='/'><p className="text-white text-[18px] sm:text-2xl md:text-3xl lg:text-5xl font-bold " >FIND PROPERTY</p></Link>
         </div>
