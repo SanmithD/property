@@ -48,16 +48,16 @@ function PostRoom() {
           },
         }
       );
-      if(response.data.success == false){
+      if (response.data.success == false) {
         setIsAlert(true);
         setAlert(response.data.message);
       }
-      setIsAlert(true)
+      setIsAlert(true);
       setAlert(response.data.message);
-      setTimeout(()=>{
+      setTimeout(() => {
         setIsAlert(false);
         setAlert("");
-      },1500)
+      }, 1500);
       setRoomData({
         title: "",
         description: "",
@@ -77,12 +77,13 @@ function PostRoom() {
 
   return (
     <div className="h-screen flex flex-col justify-start items-center bg-gray-100 ">
-      { 
-      isAlert ? 
-      <div className="absolute top-[50px] md:top-[100px] lg:top-[130px] right-[100px] md:right-[150px] lg:right-[200px] rounded bg-blue-200 w-fit h-fit p-2 border-2 border-blue-500 " >
-        <p>{alert} </p>
-      </div>
-      : '' }
+      {isAlert ? (
+        <div className="absolute top-[50px] md:top-[100px] lg:top-[130px] right-[100px] md:right-[150px] lg:right-[200px] rounded bg-blue-200 w-fit h-fit p-2 border-2 border-blue-500 ">
+          <p>{alert} </p>
+        </div>
+      ) : (
+        ""
+      )}
       <div className="flex flex-col">
         <h1 className="text-[20px] md:text-3xl lg:text-5xl  font-bold font-sans ">
           {" "}

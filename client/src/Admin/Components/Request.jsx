@@ -10,11 +10,14 @@ function Request() {
 
   const fetchRequests = async () => {
     try {
-      const res = await axios.get("http://localhost:7000/api/buy/owner/requests", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await axios.get(
+        "http://localhost:7000/api/buy/owner/requests",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setRequests(res.data.response || []);
     } catch (err) {
       console.error(err);
@@ -24,11 +27,15 @@ function Request() {
 
   const handleDecision = async (buyId, action) => {
     try {
-      const res = await axios.patch(`http://localhost:7000/api/buy/${buyId}?action=${action}`, null, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await axios.patch(
+        `http://localhost:7000/api/buy/${buyId}?action=${action}`,
+        null,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setMessage(res.data.message);
       fetchRequests();
     } catch (err) {
@@ -43,7 +50,9 @@ function Request() {
 
   return (
     <div className="max-w-5xl mx-auto p-6">
-      <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">📥 Pending Buy Requests</h1>
+      <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">
+        Pending Buy Requests
+      </h1>
 
       {error && <p className="text-red-500 text-center">{error}</p>}
       {message && <p className="text-green-600 text-center mb-4">{message}</p>}
@@ -58,7 +67,8 @@ function Request() {
               className="bg-white shadow rounded-lg p-4 border border-gray-200"
             >
               <p className="text-gray-700 font-medium mb-2">
-                🧑 <strong>{req.customerName}</strong> requested to buy <strong>{req.propertyTitle}</strong>
+                <strong>{req.customerName}</strong> requested to buy
+                <strong>{req.propertyTitle}</strong>
               </p>
               <p className="text-sm text-gray-500 mb-4">
                 Requested on: {new Date(req.createdAt).toLocaleString()}

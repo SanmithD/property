@@ -1,4 +1,5 @@
-import { Route, Routes } from "react-router-dom";
+import { useEffect } from "react";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import AdminHome from '../Components/AdminHome';
 import Message from "../Components/Message";
 import Navbar from "../Components/Navbar";
@@ -8,6 +9,18 @@ import AdminProfile from "../Components/Profile";
 import Request from "../Components/Request";
 
 function AdminRoute() {
+
+  const navigate = useNavigate();
+
+  useEffect(()=>{
+    const token = localStorage.getItem('token');
+    const role = localStorage.getItem('role');
+
+    if(!token && role == "admin" ){
+      navigate('/login')
+    }
+  },[]);
+
   return (
     <>
     <Navbar/>

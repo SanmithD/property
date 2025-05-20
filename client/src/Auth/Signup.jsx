@@ -34,13 +34,14 @@ function Signup() {
         signupData
       );
       if (!response) {
-        setIsAlert(true)
-        setAlert(response.message);
+        setIsAlert(true);
+        setAlert(response.data.message);
       }
-      setIsAlert(true)
-      setAlert(response.message);
+      setIsAlert(true);
+      setAlert(response.data.message);
       setTimeout(() => {
         setAlert("");
+        setIsAlert(false)
         navigate("/login");
       }, 3000);
     } catch (error) {

@@ -19,7 +19,9 @@ function View() {
 
   const allRooms = async () => {
     try {
-      const response = await axios.get(`http://localhost:7000/api/room/properties`);
+      const response = await axios.get(
+        `http://localhost:7000/api/room/properties`
+      );
       setRooms(response.data.response || []);
     } catch (error) {
       console.log(error);
@@ -33,7 +35,11 @@ function View() {
   return (
     <div className="flex flex-wrap gap-4 p-4">
       {rooms.map((data, key) => (
-        <div key={key} onClick={()=>navigate(`/property/${data?._id}`)} className="h-[400px] w-[300px] cursor-pointer border-2 border-red-700 p-3 rounded shadow-md bg-white ">
+        <div
+          key={key}
+          onClick={() => navigate(`/property/${data?._id}`)}
+          className="h-[400px] w-[300px] cursor-pointer border-2 border-red-700 p-3 rounded shadow-md bg-white "
+        >
           <div className="w-full h-[200px] overflow-hidden">
             <img
               src={data.image || "https://via.placeholder.com/300"}
@@ -44,14 +50,22 @@ function View() {
           <div className="mt-4">
             <h2 className="font-bold text-xl">{data.title}</h2>
             <p className="text-sm text-gray-600">
-              {data.description?.length > 50 ? data.description.substring(0, 50) + "..." : data.description}
+              {data.description?.length > 50
+                ? data.description.substring(0, 50) + "..."
+                : data.description}
             </p>
-            <p className="text-2xl text-gray-500 font-bold " >Location : {data.state} </p>
+            <p className="text-2xl text-gray-500 font-bold ">
+              Location : {data.state}
+            </p>
             <div className="flex mt-4 gap-3 ">
-              <span className={`text-sm font-semibold px-3 py-1 rounded-full text-white ${getStatusColor(data.status)}`}>
+              <span
+                className={`text-sm font-semibold px-3 py-1 rounded-full text-white ${getStatusColor(
+                  data.status
+                )}`}
+              >
                 {data.status}
               </span>
-              <span className="text-2xl text-gray-600 font-bold " >
+              <span className="text-2xl text-gray-600 font-bold ">
                 SqFt :{data.sqFt}
               </span>
             </div>

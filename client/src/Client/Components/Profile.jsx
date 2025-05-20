@@ -30,6 +30,7 @@ function Profile() {
     let status = window.confirm("Confirm Logout ?");
     if (status) {
       localStorage.removeItem("token");
+      localStorage.removeItem("role");
       navigate("/login");
     }
   };

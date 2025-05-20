@@ -51,27 +51,27 @@ function Property() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div>
-          <p className="text-gray-800 font-medium">📍 Location:</p>
+          <p className="text-gray-800 font-medium"> Location:</p>
           <p className="text-gray-600">{property.city}, {property.state}</p>
         </div>
         <div>
-          <p className="text-gray-800 font-medium">💵 Price:</p>
+          <p className="text-gray-800 font-medium"> Price:</p>
           <p className="text-green-600 font-bold text-xl">${property.price}</p>
         </div>
         <div>
-          <p className="text-gray-800 font-medium">📐 Square Feet:</p>
+          <p className="text-gray-800 font-medium"> Square Feet:</p>
           <p className="text-gray-600">{property.sqFt} sq ft</p>
         </div>
         <div>
-          <p className="text-gray-800 font-medium">🛏 Bedrooms:</p>
+          <p className="text-gray-800 font-medium"> Bedrooms:</p>
           <p className="text-gray-600">{property.bedroom}</p>
         </div>
         <div>
-          <p className="text-gray-800 font-medium">🛁 Bathrooms:</p>
+          <p className="text-gray-800 font-medium"> Bathrooms:</p>
           <p className="text-gray-600">{property.bathroom}</p>
         </div>
         <div>
-          <p className="text-gray-800 font-medium">📌 Status:</p>
+          <p className="text-gray-800 font-medium"> Status:</p>
           <span
             className={`inline-block px-3 py-1 rounded-full text-white font-semibold ${
               property.status === "available"
