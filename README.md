@@ -21,6 +21,7 @@
 
 ## Project Structure
 
+```
 ├── Property
     ├── Client
         ├── Admin
@@ -41,6 +42,7 @@
         ├── .env
     ├── .gitignore
     ├── README.md
+```
 
 ## Setup instructions
 
