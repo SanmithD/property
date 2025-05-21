@@ -93,6 +93,7 @@ const login = async(req, res) =>{
             success: true,
             message: "Login successful",
             token,
+            ownerId: user.id,
             name: user.name,
             role: user.role
         });

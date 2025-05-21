@@ -10,6 +10,7 @@ function Owner({ id }) {
       const response = await axios.get(
         `http://localhost:7000/api/auth/user/${id}`
       );
+      console.log("owner",response.data)
       setOwner(response.data.response || []);
     } catch (error) {
       console.log(error);

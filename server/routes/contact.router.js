@@ -1,11 +1,11 @@
 import express from 'express';
-import { customerMessageOwner, getChatWithCustomer, getOwnerChats, replyToCustomer } from '../controllers/contact.controllers.js';
+import { getAllOwnerMsg, getAllUserMsg, getMsg, getUserMsg } from '../controllers/contact.controllers.js';
 
 const contactRouter = express.Router();
 
-contactRouter.post("/message/:ownerId", customerMessageOwner);
-contactRouter.get("/owner/chats", getOwnerChats);
-contactRouter.get("/owner/chat/:customerId", getChatWithCustomer);
-contactRouter.post("/reply/:messageId", replyToCustomer);
+contactRouter.get("/ownerMsg", getAllOwnerMsg);
+contactRouter.get("/customer", getAllUserMsg);
+contactRouter.get("/chats/:ownerId", getMsg);
+contactRouter.get("/user-chats/:customer", getUserMsg);
 
 export default contactRouter;

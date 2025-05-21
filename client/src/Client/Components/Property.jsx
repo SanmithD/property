@@ -23,6 +23,7 @@ function Property() {
         },
       });
       owner = response.data.response.owner;
+      console.log(response.data.response.owner)
       setProperty(response.data.response);
     } catch (err) {
       console.error("Error fetching property:", err);
@@ -85,7 +86,7 @@ function Property() {
           </span>
         </div>
         <Buy id={property._id}/>
-        <Owner id={owner}/>
+        <Owner id={property.owner}/>
       </div>
     </div>
   );

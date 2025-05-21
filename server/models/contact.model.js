@@ -1,27 +1,22 @@
-import mongoose from "mongoose";
-
-const replySchema = new mongoose.Schema({
-  userId: String,
-  name: String,
-  message: String,
-  createdAt: { type: Date, default: Date.now },
-});
-
-const userMsgSchema = new mongoose.Schema({
-  userId: String,     
-  name: String,
-  message: String,
-  replies: [replySchema],
-  createdAt: { type: Date, default: Date.now },
-});
+import mongoose from 'mongoose';
 
 const contactSchema = new mongoose.Schema({
-  ownerId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
-  customerMessages: [userMsgSchema],
-}, { timestamps: true });
+    ownerId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'user'
+    },
+    customer:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'user'
+    },
+    message:{
+      type: String,
+      required: true
+    },
+    createdAt:{
+      type: Date,
+      default: Date.now()
+    }
+},{ timestamps: true });
 
-export default mongoose.model("Contact", contactSchema);
+export const contactModel = mongoose.model('contact', contactSchema);

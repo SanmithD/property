@@ -31,6 +31,7 @@ function Login() {
       setAlert(response.data.message);
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("role", response.data.role);
+      localStorage.setItem("ownerId", response.data.ownerId);
       setTimeout(() => {
         setIsAlert(false);
         setAlert("");
