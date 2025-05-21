@@ -6,6 +6,6 @@ const contactRouter = express.Router();
 contactRouter.get("/ownerMsg", getAllOwnerMsg);
 contactRouter.get("/customer", getAllUserMsg);
 contactRouter.get("/chats/:ownerId", getMsg);
-contactRouter.get("/user-chats/:customer", getUserMsg);
+contactRouter.get("/user-chats/:id", getUserMsg);
 
 export default contactRouter;

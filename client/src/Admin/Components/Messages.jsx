@@ -4,25 +4,25 @@ import Chat from '../../Auth/Chat';
 
 const socket = io('http://localhost:7000');
 
-function CustomerChat() {
+function AdminChat() {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
 
   const handleSend = (e) => {
     e.preventDefault();
     if (!message.trim()) return;
-    socket.emit('user-message', message);
+    socket.emit('admin-message', message);
     setMessages(prev => [...prev, { sender: 'You', text: message }]);
     setMessage('');
   };
 
   useEffect(() => {
     const receive = (msg) => {
-      setMessages(prev => [...prev, { sender: 'Admin', text: msg }]);
+      setMessages(prev => [...prev, { sender: 'User', text: msg }]);
     };
 
-    socket.on('user-receive', receive); 
-    return () => socket.off('user-receive', receive);
+    socket.on('admin-receive', receive);
+    return () => socket.off('admin-receive', receive);
   }, []);
 
   return (
@@ -36,7 +36,7 @@ function CustomerChat() {
           onChange={(e) => setMessage(e.target.value)}
           className="flex-1 border rounded-l px-3 py-2"
         />
-        <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded-r">
+        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-r">
           Send
         </button>
       </form>
@@ -44,4 +44,4 @@ function CustomerChat() {
   );
 }
 
-export default CustomerChat;
+export default AdminChat;

@@ -10,7 +10,6 @@ function Owner({ id }) {
       const response = await axios.get(
         `http://localhost:7000/api/auth/user/${id}`
       );
-      console.log("owner",response.data)
       setOwner(response.data.response || []);
     } catch (error) {
       console.log(error);
@@ -30,7 +29,7 @@ function Owner({ id }) {
         <p className="text-[20px] text-gray-800">{owner.phone} </p>
       </div>
       <button
-        onClick={() => navigate(`/contact/${id}`)}
+        onClick={() => navigate(`/contact`)}
         className="text-gray-800 text-2xl border-2 px-2 cursor-pointer hover:bg-gray-300 rounded"
       >
         Message

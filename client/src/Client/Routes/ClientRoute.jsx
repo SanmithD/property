@@ -12,7 +12,7 @@ function ClientRoute() {
     <Navbar/>
     <Routes>
       <Route path="/" element={<ClientHome/>}/>
-      <Route path="/contact/:id" element={<Contact/>}/>
+      <Route path="/contact" element={<Contact/>}/>
       <Route path="/view" element={<View/>}/>
       <Route path="/profile" element={<Profile/>}/>
       <Route path="/property/:id" element={<Property/>}/>

@@ -23,7 +23,6 @@ function Property() {
         },
       });
       owner = response.data.response.owner;
-      console.log(response.data.response.owner)
       setProperty(response.data.response);
     } catch (err) {
       console.error("Error fetching property:", err);
