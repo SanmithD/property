@@ -26,7 +26,7 @@ function AdminChat() {
   }, []);
 
   return (
-    <div className="max-w-md mx-auto p-4 bg-white shadow rounded">
+    <div className="border-2 max-w-md mx-auto p-4 bg-white shadow rounded">
       <Chat messages={messages} />
       <form onSubmit={handleSend} className="flex mt-4">
         <input

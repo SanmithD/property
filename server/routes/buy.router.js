@@ -6,6 +6,6 @@ const buyRouter = express.Router();
 buyRouter.post('/:id',   buyRoom);        
 buyRouter.patch('/:buyId', ownerDecision); 
 buyRouter.get("/owner/requests", getOwnerRequests);
-buyRouter.put('/cancel/:propertyId', cancelRoom); 
+buyRouter.put('/cancel/:id', cancelRoom); 
 
 export default buyRouter;

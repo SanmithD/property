@@ -87,7 +87,7 @@ export const ownerDecision = async (req, res) => {
       order.status = "accepted";
       await order.save();
 
-      await propertyModel.findByIdAndUpdate(order.property, { status: "sold" });
+      await propertyModel.findByIdAndUpdate(order.property, { status: "sold" },{ new: true });
 
       return res.json({
         success: true,
@@ -112,8 +112,8 @@ export const ownerDecision = async (req, res) => {
 };
 
 export const cancelRoom = async (req, res) => {
-  const { propertyId } = req.params;
-  if (!propertyId) {
+  const { id } = req.params;
+  if (!id) {
     return res.status(400).json({
       success: false,
       message: "Invalid property",
@@ -121,7 +121,7 @@ export const cancelRoom = async (req, res) => {
   }
   try {
     const response = await propertyModel.findByIdAndUpdate(
-      propertyId,
+      id,
       { status: "available" },
       { new: true }
     );

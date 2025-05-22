@@ -1,4 +1,7 @@
-function Buy(id) {
+import axios from 'axios';
+
+function Buy({id}) {
+  const token = localStorage.getItem('token');
   const handleBuy = async () => {
     try {
       const response = await axios.post(
@@ -10,10 +13,12 @@ function Buy(id) {
           },
         }
       );
+      alert("Request sent to owner");
     } catch (error) {
       console.log(error);
     }
   };
+
   return (
     <button
       onClick={handleBuy}

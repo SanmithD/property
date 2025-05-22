@@ -35,6 +35,19 @@ function Profile() {
     }
   };
 
+  const handleLeave = async(id) =>{
+    try {
+      const confirm = window.confirm("Are sure want to leave property");
+      if(confirm){
+        const response = await axios.put(`http://localhost:7000/api/buy/cancel/${id}`);
+        userProfile();
+        console.log(response.data)
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   useEffect(() => {
     userProfile();
   }, []);
@@ -113,6 +126,7 @@ function Profile() {
                   <strong>Purchased on:</strong>{" "}
                   {new Date(item.createdAt).toLocaleDateString()}
                 </p>
+                <button onClick={()=>handleLeave(item._id)} className="h-fit w-fit text-[16px] md:text-2xl lg:text-3xl text-white bg-red-600 rounded px-3 cursor-pointer hover:bg-red-900 " >Leave</button>
               </div>
             ))
           )}

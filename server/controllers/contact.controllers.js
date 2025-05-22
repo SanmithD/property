@@ -116,9 +116,6 @@ const contactController = async (io) => {
 // };
 
 export {
-  contactController,
-  getAllOwnerMsg,
-  getAllUserMsg,
-  getMsg,
-  getUserMsg
+  contactController
 };
+
